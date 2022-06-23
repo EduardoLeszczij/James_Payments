@@ -1,0 +1,14 @@
+{
+  "name": "jamespay",
+  "version": "1.0.0",
+  "description": "JamesPay",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress open"
+  },
+  "author": "Eduardo Leszczij",
+  "license": "MIT",
+  "dependencies": {
+    "cypress": "^9.6.1"
+  }
+}
