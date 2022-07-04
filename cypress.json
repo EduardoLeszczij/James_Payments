@@ -2,5 +2,6 @@
     "projectId": "2um1oi",
     "baseUrl": "https://dash-james-pay.dev.james.delivery/",
     "viewportWidth": 1440,
-    "viewportHeight": 900
+    "viewportHeight": 900,
+    "includeShadowDom": true
 }

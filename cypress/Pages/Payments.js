@@ -1,11 +1,56 @@
 class Payments{
 
-    acess() {
+    acess(user) {
         cy.visit("/");
         cy.title().should('be.equal', 'JamesPayWeb');
         cy.get('div[class="login__form"] > span')
             .should('have.text', 'Hey! Adicione seu email e senha para acessar a área logada do James Pay');
-        cy.get('')
+        cy.get('#input-email')
+            .shadow()
+            .find('[data-testid="input-email"]')
+            .should('be.visible')
+            .type(user.email);
+        cy.get('#input-password')
+            .shadow()
+            .find('[data-testid="input-password"]')
+            .type(user.password);
+        cy.get('#btn-login')
+            .shadow()
+            .find('[id="custom-button"]')
+            .click({force: true})
+        cy.get('span[id="navbar-title"]')
+            .should('have.text', 'Transações');
+
+    }
+
+    searchTransactionBypedidoId(transaction) {
+        cy.get('#input-search')
+            .shadow()
+            .find('[data-testid="input-search"]')
+            .type(transaction.pedidoId);
+        cy.get('#btn-search')
+            .shadow()
+            .find('[data-testid="btn-search"]')
+            .click({force: true})
+            .wait(3000);
+        cy.contains('tbody tr td:nth-child(2)', transaction.pedidoId)
+            .should('have.text', transaction.pedidoId);
+            
+    }
+
+    searchTransactionBycapturaId(transaction) {
+        cy.get('#input-search')
+            .shadow()
+            .find('[data-testid="input-search"]')
+            .type(transaction.capturaId);
+        cy.get('#btn-search')
+            .shadow()
+            .find('[data-testid="btn-search"]')
+            .click({force: true})
+            .wait(3000);
+        cy.contains('tbody tr td:nth-child(3)', transaction.capturaId)
+            .should('have.text', transaction.capturaId);
+
     }
 
 }
