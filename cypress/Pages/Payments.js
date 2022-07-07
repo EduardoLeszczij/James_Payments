@@ -21,7 +21,7 @@ class Payments{
         cy.get('span[id="navbar-title"]')
             .should('have.text', 'Transações');
 
-    }
+    };
 
     searchTransactionBypedidoId(transaction) {
         cy.get('#input-search')
@@ -36,7 +36,7 @@ class Payments{
         cy.contains('tbody tr td:nth-child(2)', transaction.pedidoId)
             .should('have.text', transaction.pedidoId);
             
-    }
+    };
 
     searchTransactionBycapturaId(transaction) {
         cy.get('#input-search')
@@ -51,8 +51,27 @@ class Payments{
         cy.contains('tbody tr td:nth-child(3)', transaction.capturaId)
             .should('have.text', transaction.capturaId);
 
-    }
+    };
+    
+    searchByPeriod(period, statusCode){
+        cy.get('div[class="calendar__wrapper"]').click();
+        cy.wait(3000);
+        cy.get('[idbutton="btn-previous-month"]')
+            .shadow()
+            .find('[data-testid="btn-previous-month"]')
+            .click({force: true})
+        cy.contains('span[class="calendar__number"]', period.days)
+            .click({multiple: true});
+        cy.wait(3000);
+        cy.get('[idbutton="btn-apply-calendar"]')
+            .shadow()
+            .find('[data-testid="btn-apply-calendar"]')
+            .click({force: true});
+        cy.get('tbody td:nth-child(8)')
+            .should('have.text', statusCode.status)            
 
-}
+    };
+
+};
 
 export default new Payments;
