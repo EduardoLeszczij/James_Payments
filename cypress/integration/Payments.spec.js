@@ -2,6 +2,14 @@
 
 import pay from '../Pages/Payments'
 
+const period = {
+    days: '27'
+}
+
+const statusCode = {
+    status: ' Paga '
+}
+
 describe("Buscar Transação por ID Pedido/Captura", () => {
 
     var user = {
@@ -26,29 +34,30 @@ describe("Buscar Transação por ID Pedido/Captura", () => {
 
     });
 
-    after(function(){
-        cy.get('div[class="calendar__wrapper"]').click();
-        cy.get('[data-testid="btn-clear-calendar"]').click();
-        cy.get('[idbutton="btn-apply-calendar"]')
-        .shadow()
-        .find('[data-testid="btn-apply-calendar"]')
-        .click({force: true});        
-    })
+    it.only('Download File Export By Period', () => {
+        
+        pay.acess(user);
+        pay.searchByPeriod(period, statusCode);
+        pay.exportFile();
+        pay.logout();
+    });
 
-    it.only('search by period', () => {
+    function clean() {
+        afterEach(function(){
+            cy.get('div[class="calendar__wrapper"]').click();
+            cy.get('[data-testid="btn-clear-calendar"]').click();
+            cy.get('[idbutton="btn-apply-calendar"]')
+            .shadow()
+            .find('[data-testid="btn-apply-calendar"]')
+            .click({force: true});        
+        })   
+    }
 
-        const period = {
-            days: '27'
-        }
-
-        const statusCode = {
-            status: ' Paga '
-        }
+    it('search by period', () => {
 
         pay.acess(user);
         pay.searchByPeriod(period, statusCode);
+        pay.clean();
         
     });
-
-
 })

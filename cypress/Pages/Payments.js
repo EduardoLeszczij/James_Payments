@@ -17,7 +17,8 @@ class Payments{
         cy.get('#btn-login')
             .shadow()
             .find('[id="custom-button"]')
-            .click({force: true})
+            .click({force: true});
+        cy.wait(3000);
         cy.get('span[id="navbar-title"]')
             .should('have.text', 'Transações');
 
@@ -71,6 +72,22 @@ class Payments{
             .should('have.text', statusCode.status)            
 
     };
+
+    exportFile(){
+       
+        cy.get('[idbutton="btn-export"]')
+            .shadow()
+            .find('[data-testid="btn-export"]')
+            .click({force: true});
+        cy.get('div[class="download-modal__wrapper"]')
+            .should('have.text', 'Downlolad realizado');
+    }
+
+    logout(){
+
+        cy.get('div[id="div-sidebar-logout"]')
+            .click()
+    }
 
 };
 
