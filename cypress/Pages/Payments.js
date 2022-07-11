@@ -54,7 +54,7 @@ class Payments{
 
     };
     
-    searchByPeriod(period, statusCode){
+    searchByPeriod(period, statusCode) {
         cy.get('div[class="calendar__wrapper"]').click();
         cy.wait(3000);
         cy.get('[idbutton="btn-previous-month"]')
@@ -73,7 +73,21 @@ class Payments{
 
     };
 
-    exportFile(){
+    searchSevenDaysAgo() {
+
+        var days = '30 dias'
+        
+        if (days === "7 dias") {
+            cy.get('[data-testid="period-7"]').click();                
+        } else if (days === "15 dias") {
+            cy.get('[data-testid="period-15"]').click();  
+        } else if (days === "30 dias") {
+            cy.get('[data-testid="period-30"]').click();  
+        }
+           
+    }
+
+    exportFile() {
        
         cy.get('[idbutton="btn-export"]')
             .shadow()
@@ -83,7 +97,7 @@ class Payments{
             .should('have.text', 'Downlolad realizado');
     }
 
-    logout(){
+    logout() {
 
         cy.get('div[id="div-sidebar-logout"]')
             .click()

@@ -2,8 +2,19 @@
 
 import pay from '../Pages/Payments'
 
+function clean() {
+    afterEach(function(){
+        cy.get('div[class="calendar__wrapper"]').click();
+        cy.get('[data-testid="btn-clear-calendar"]').click();
+        cy.get('[idbutton="btn-apply-calendar"]')
+        .shadow()
+        .find('[data-testid="btn-apply-calendar"]')
+        .click({force: true});        
+    })   
+}
+
 const period = {
-    days: '27'
+    day: '27'
 }
 
 const statusCode = {
@@ -23,35 +34,27 @@ describe("Buscar Transação por ID Pedido/Captura", () => {
     }
 
     it('search by pedidoId', () => {
+        
         pay.acess(user);
         pay.searchTransactionBypedidoId(transaction);
 
     });
 
     it('serach by capturaId', () => {
+        
         pay.acess(user);
         pay.searchTransactionBycapturaId(transaction);
 
     });
 
-    it.only('Download File Export By Period', () => {
+    it('Download File Export By Period', () => {
         
         pay.acess(user);
         pay.searchByPeriod(period, statusCode);
         pay.exportFile();
         pay.logout();
-    });
 
-    function clean() {
-        afterEach(function(){
-            cy.get('div[class="calendar__wrapper"]').click();
-            cy.get('[data-testid="btn-clear-calendar"]').click();
-            cy.get('[idbutton="btn-apply-calendar"]')
-            .shadow()
-            .find('[data-testid="btn-apply-calendar"]')
-            .click({force: true});        
-        })   
-    }
+    });
 
     it('search by period', () => {
 
@@ -59,5 +62,11 @@ describe("Buscar Transação por ID Pedido/Captura", () => {
         pay.searchByPeriod(period, statusCode);
         pay.clean();
         
+    });
+
+    it.only('search by last 7 days', () => {
+       
+        pay.acess(user);
+        pay.searchSevenDaysAgo();
     });
 })
